@@ -1,0 +1,14 @@
+hash: b4c92e1c9b70f868daeaebcbeec7266ec505bd021aa4408d6d56889731d0ac75
+updated: 2018-10-03T14:50:20.479384+08:00
+imports:
+- name: github.com/go-sql-driver/mysql
+  version: d523deb1b23d913de5bdada721a6071e71283618
+- name: github.com/jmoiron/sqlx
+  version: 0dae4fefe7c0e190f7b5a78dac28a1c82cc8d849
+  subpackages:
+  - reflectx
+- name: google.golang.org/appengine
+  version: ae0ab99deb4dc413a2b4bd6c8bdd0eb67f1e4d06
+  subpackages:
+  - cloudsql
+testImports: []
