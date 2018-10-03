@@ -53,9 +53,9 @@ func main() {
 		log.Fatalln(err)
 	}
 
-	num := 2
+	num := 10
 	for i := 0; i < num; i++ {
-		go func() {
+		go func(i int) {
 			var balance int
 			tx, err := db.Begin()
 			if err != nil {
@@ -63,13 +63,13 @@ func main() {
 			}
 
 			defer tx.Rollback()
-
-			selectQuery := `SELECT balance FROM account WHERE id = 1`
+			// Add `FOR UPDATE` behind can solve the problem
+			selectQuery := `SELECT balance FROM account WHERE id = 1 FOR UPDATE`
 			err = tx.QueryRow(selectQuery).Scan(&balance)
 			if err != nil {
 				log.Fatalln(err)
 			}
-			fmt.Println("balance:", balance)
+			fmt.Printf("%v balance: %v\n", i, balance)
 			// each go-routine add 100 to account
 			balance += 100
 
@@ -82,7 +82,7 @@ func main() {
 			time.Sleep(time.Second)
 			tx.Commit()
 			done <- true
-		}()
+		}(i)
 	}
 
 	//wait until database finish
